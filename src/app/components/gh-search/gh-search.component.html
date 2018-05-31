@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col-md-12">
+		<h1>GitHub Search</h1>
+	</div>
+</div>
+<div class="row" *ngIf="search">
+	<div class="col-md-12">
+		<form>
+			<div class="form-group">
+				<input 
+					type="text" 
+					class="form-control" 
+					placeholder="Enter The GitHub Username..." 
+					[(ngModel)]="username" 
+					name="username">
+			</div>
+		</form>
+		
+		<button type="button" class="btn btn-large btn-block btn-primary" (click)="searchUser()">Search</button>
+		<br>
+	</div>
+</div>
+<div *ngIf="!search">
+	<div class="row" *ngIf="!usersRetrived">
+		<h1>
+			Loading...
+		</h1>
+	</div>
+	<div class="row" *ngIf="usersRetrived">
+		<div class="col-md-6">
+			<button type="button" class="btn btn-large btn-primary" (click)="searchAgain()">Search Again</button>
+		</div>
+		<div class="col-md-6">
+			<h3>Showing {{(pageNo-1)*10 + 1}} - {{pageNo*10}} of {{totalUsers}} </h3>
+		</div>
+	</div><br>
+	<div class="row" *ngIf="usersRetrived">
+		<div class="col-md-6 col-md-push-3">
+			<div class="row" *ngFor="let user of users">
+				<a class="list-group-item clearfix" routerLink="/user/{{user.login}}">
+					<div class="pull-right">
+						<h3 class="list-group-item-heading">{{user.login}}</h3>
+					</div>
+					<span class="pull-left">
+						<img [src]="user.avatar_url" alt="{{ user.login }}" class="img-responsive" style="max-height: 100px;">
+					</span>
+				</a>
+			</div>
+				<li>
+					
+				</li>	
+		</div>	
+	</div><br>
+	<div class="row" *ngIf="usersRetrived">
+		<div class="col-md-2 col-md-push-3">
+			<button 
+				type="button" 
+				class="btn btn-large btn-block btn-primary" 
+				*ngIf="pageNo != 1"
+				(click)="prevPage()">
+				Previous
+			</button>
+		</div>
+		<div class="col-md-2 col-md-push-3" style="text-align: center">
+			<h3>{{pageNo}}</h3>
+		</div>
+		<div class="col-md-2 col-md-push-3">
+			<button 
+				type="button" 
+				class="btn btn-large btn-block btn-primary"
+				*ngIf="pageNo < totalUsers/10"
+				(click)="nextPage()">
+				Next
+			</button>
+		</div>
+	</div>
+</div>
+
+
